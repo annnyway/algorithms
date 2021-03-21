@@ -1,13 +1,13 @@
-def validate_pushed_popped(pushed: list, popped: list):
+def validate_pushed_popped(pushed_seq: list, popped_seq: list):
     stack = []
-    j = 0
-    seq_length = len(popped)
-    for i in range(seq_length):
-        stack.append(pushed[i])
-        while len(stack) > 0 and j < seq_length and stack[-1] == popped[j]:
+    i = 0
+    seq_length = len(pushed_seq)
+    for pushed in pushed_seq:
+        stack.append(pushed)
+        while len(stack) > 0 and i < seq_length and stack[-1] == popped_seq[i]:
             stack.pop()
-            j += 1
-    return j == seq_length
+            i += 1
+    return i == seq_length
 
 
 def solution():
