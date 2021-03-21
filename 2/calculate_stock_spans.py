@@ -1,21 +1,23 @@
-from collections import deque
-
-
 def calculate_stock_spans(prices: list) -> list:
-    seq = deque()
     res = []
-    for i, curr_price in enumerate(prices):
-        seq.appendleft(curr_price)
-        count = 0
-        for elem in seq:
-            if elem > curr_price:
+    stack = []
+
+    res.append(1)
+    stack.append(0)
+
+    for i in range(1, len(prices)):
+        while prices[i] >= prices[stack[-1]]:  # пока текущая цена больше цены на вершине стека
+            stack.pop()                        # снимаем со стека верхний индекс
+            if len(stack) == 0:
                 break
-            count += 1
 
-        if count == 0:
-            count = 1
+        if len(stack) > 0:              # если стек не пустой
+            res.append(i - stack[-1])   # добавляем индекс текущей цены - индекс цены на вершине стека
+        else:
+            res.append(i + 1)           # если стек пусстой - значит, цена росла до сих пор, прибавляем + 1
 
-        res.append(count)
+        # проходимся по индексам цен и добавляем их в стэк
+        stack.append(i)
 
     return res
 
